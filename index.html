@@ -809,7 +809,7 @@
             };
 
             let deepSeekerImg = new Image();
-            deepSeekerImg.src = "https://files.catbox.moe/u08ad5.png";
+            deepSeekerImg.src = "https://files.catbox.moe/z0ssob.png";
             let deepSeekerImgLoaded = false;
             deepSeekerImg.onload = () => {
                 deepSeekerImgLoaded = true;
@@ -830,7 +830,7 @@
             };
 
             let claudiumImg = new Image();
-            claudiumImg.src = "https://files.catbox.moe/je8tth.png";
+            claudiumImg.src = "https://files.catbox.moe/tan7je.png";
             let claudiumImgLoaded = false;
             claudiumImg.onload = () => {
                 claudiumImgLoaded = true;
@@ -1300,7 +1300,8 @@
                 o.type = type;
                 o.connect(g);
                 g.connect(actx.destination);
-                o.frequency.setValueAtTime(f, actx.currentTime);
+                let randomPitch = f * (0.85 + Math.random() * 0.3);
+                o.frequency.setValueAtTime(randomPitch, actx.currentTime);
                 o.frequency.exponentialRampToValueAtTime(10, actx.currentTime + t);
                 g.gain.setValueAtTime(v, actx.currentTime);
                 g.gain.linearRampToValueAtTime(0, actx.currentTime + t);
@@ -1388,17 +1389,17 @@
 
             (function buildCards() {
                 const svgs = [
-                    `<img src="https://files.catbox.moe/yu3ypn.png" width="80" height="70" style="object-fit:contain; transform: rotate(90deg);">`,
-                    `<img src="https://files.catbox.moe/u08ad5.png" width="52" height="52" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/je699a.png" width="80" height="80" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/swb7cz.png" width="80" height="80" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/ihtmef.png" width="72" height="72" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/je8tth.png" width="80" height="80" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/jf4qc3.png" width="80" height="80" style="object-fit:contain;">`,
-                    `<img src="https://files.catbox.moe/tsk77n.png" width="80" height="80" style="object-fit:contain; transform: rotate(-90deg);">`,
-                    `<img src="https://files.catbox.moe/fi183e.png" width="80" height="80" style="object-fit:contain; transform: rotate(0deg);">`,
-                    `<img src="https://files.catbox.moe/jipsdf.png" width="80" height="80" style="object-fit:contain; transform: rotate(0deg);">`,
-                    `<img src="https://files.catbox.moe/czscdd.png" width="80" height="80" style="object-fit:contain;">`,
+                    `<img src="https://files.catbox.moe/yu3ypn.png" width="80" height="70" style="object-fit:contain; transform: rotate(90deg);">`, // Gemini
+                    `<img src="https://files.catbox.moe/z0ssob.png" width="80" height="80" style="object-fit:contain;">`, // Deep Seeker (Link do seu código original)
+                    `<img src="https://files.catbox.moe/0nj932.png" width="80" height="80" style="object-fit:contain;">`, // Gronki
+                    `<img src="https://files.catbox.moe/z43hik.png" width="80" height="80" style="object-fit:contain;">`, // Gravship
+                    `<img src="https://files.catbox.moe/ihtmef.png" width="72" height="72" style="object-fit:contain;">`, // Gopilot
+                    `<img src="https://files.catbox.moe/tan7je.png" width="80" height="80" style="object-fit:contain;">`, // Claudium (Link do seu código original)
+                    `<img src="https://files.catbox.moe/jf4qc3.png" width="80" height="80" style="object-fit:contain;">`, // StarChance
+                    `<img src="https://files.catbox.moe/tsk77n.png" width="80" height="80" style="object-fit:contain; transform: rotate(-90deg);">`, // Perplexion
+                    `<img src="https://files.catbox.moe/fi183e.png" width="80" height="80" style="object-fit:contain; transform: rotate(0deg);">`, // StarJourney
+                    `<img src="https://files.catbox.moe/jipsdf.png" width="80" height="80" style="object-fit:contain; transform: rotate(0deg);">`, // AstroLabs
+                    `<img src="https://files.catbox.moe/czscdd.png" width="80" height="80" style="object-fit:contain;">`, // SuperNova
                 ];
                 const container = document.getElementById("ship-sel-container");
                 SHIPS.forEach((s, i) => {
@@ -2453,7 +2454,7 @@
                             "#fff",
                             false,
                             false,
-                            P.spActive > 0 ? 99 : P.unLvl + 1,
+                            0,
                             false,
                             150,
                             false,
@@ -2463,7 +2464,7 @@
                             0,
                             null,
                             false,
-                            0,
+                            P.spActive > 0 ? 99 : P.unLvl + 1, // Nível 6 = 7 penetrações
                             false,
                             false,
                             "thin_triangle"
@@ -2752,7 +2753,7 @@
 
                 if ((P.type == 5 || P.type == 10) && gameActive && !shopOpen) {
                     let laserWidth = 1 + P.unLvl * 0.5;
-                    let damageCooldownFrames = Math.max(18, 120 - P.unLvl * 9 - P.frLvl * 5);
+                    let damageCooldownFrames = Math.max(8, 120 - P.unLvl * 9 - P.frLvl * 5);
                     if (claudiumLaser.specialActive) {
                         claudiumLaser.specialAngle = angToM;
                         claudiumLaser.specialTimer--;
@@ -3719,7 +3720,7 @@
                         triggerShake(12);
                         if (P.hp <= 0) die();
                     }
-                    // === COLISÃO COM BALAS (corrigido) ===
+                    // === COLISÃO COM BALAS ===
                     for (let j = bs.length - 1; j >= 0; j--) {
                         let b = bs[j];
                         if (Math.hypot(e.x - b.x, e.y - b.y) < e.sz + (b.size || 6)) {
@@ -3743,6 +3744,7 @@
 
                             // Cadeia do Gopilot
                             if (P.type == 4) {
+                                // ... (deixa o código da cadeia como está)
                                 let currentE = e,
                                     chainCount = 0,
                                     maxChain = P.unLvl,
@@ -3782,10 +3784,17 @@
                                 }
                             }
 
+                            // Penetração
                             if (b.specialPenetrate) {
                                 b.penetrationCount = (b.penetrationCount || 0) + 1;
-                                if (b.penetrationCount >= 3) bs.splice(j, 1);
-                            } else if (b.ex) {
+                                let maxPen = b.penetrationMax || 3;
+                                if (b.penetrationCount >= maxPen) bs.splice(j, 1);
+                            } else if (!b.isRing) {
+                                bs.splice(j, 1);
+                            }
+
+                            // Shockwave do Gronki (tipo 2)
+                            if (P.type == 2) {
                                 shockwaves.push({
                                     x: b.x,
                                     y: b.y,
@@ -3794,9 +3803,6 @@
                                     dmg: dmgToDeal * 2,
                                     c: "#ff0044",
                                 });
-                                bs.splice(j, 1);
-                            } else if (!b.isRing) {
-                                bs.splice(j, 1);
                             }
 
                             if (e.hp <= 0) {
@@ -3836,6 +3842,7 @@
                                     Snd(400, 0.1, 0.1);
                                 }
                             }
+                            break; // importante: sai do loop após acertar
                         }
                     }
                 });
@@ -3853,29 +3860,29 @@
                     if (puDist < P.sz + 18) {
                         if (pu.type === "immortal") {
                             P.inv = 600;
-                            showPowerupToast("⚡ ESCUDO IMORTAL!", "#f0f");
+                            showPowerupToast("ESCUDO", "#f0f");
                             Snd(800, 0.5, 0.4, "sine");
                         } else if (pu.type === "rapidfire") {
                             rapidfireTimer = 600;
-                            showPowerupToast("🔥 FOGO RÁPIDO! 10s", "#ff8800");
+                            showPowerupToast("FOGO RÁPIDO", "#ff8800");
                             Snd(900, 0.4, 0.4, "sine");
                         } else if (pu.type === "doublePoints") {
                             doublePointsTimer = 900;
-                            showPowerupToast("💰 2X PONTOS! 15s", "#ffaa00");
+                            showPowerupToast("2X PONTOS", "#ffaa00");
                             Snd(700, 0.4, 0.4, "sine");
                         } else if (pu.type === "stealth") {
                             stealthTimer = 900;
-                            showPowerupToast("👻 FURTIVIDADE! 15s", "#88aaff");
+                            showPowerupToast("FURTIVIDADE", "#88aaff");
                             Snd(650, 0.4, 0.4, "sine");
                         } else if (pu.type === "repulsion") {
                             repulsionTimer = 900;
                             repulsionRing.active = true;
                             repulsionRing.r = 0;
-                            showPowerupToast("🛡️ REPULSÃO! 15s", "#ff66aa");
+                            showPowerupToast("REPULSÃO", "#ff66aa");
                             Snd(750, 0.5, 0.4, "sawtooth");
                         } else {
                             specCD = 0;
-                            showPowerupToast("✦ ESPECIAL RECARREGADO!", "#0ff");
+                            showPowerupToast("ESPECIAL RECARREGADO", "#0ff");
                             Snd(600, 0.4, 0.4, "sine");
                         }
                         powerups.splice(i, 1);
